@@ -1,10 +1,12 @@
 package com.bharath.rickyandmortyseries.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import com.bharath.rickyandmortyseries.Controller.CharacterDetailController
 import com.bharath.rickyandmortyseries.databinding.FragmentDetailsBinding
 
 
@@ -18,6 +20,8 @@ class DetailsFragment : BaseFragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
+    private val safeArgs: DetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +33,14 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        characterDetailsViewModel.getCharacterDetails(safeArgs.characterId)
+        val detailsController  =  CharacterDetailController()
+        characterDetailsViewModel.characterByIdLiveData.observe(viewLifecycleOwner){ response ->
+            detailsController.characterDetailResponse = response
+        }
+        binding.epoxyRecyclerView.setControllerAndBuildModels(detailsController)
+
     }
 
     override fun onDestroy() {

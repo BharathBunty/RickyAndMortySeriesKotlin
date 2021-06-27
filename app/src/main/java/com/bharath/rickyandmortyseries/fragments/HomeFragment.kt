@@ -1,11 +1,11 @@
 package com.bharath.rickyandmortyseries.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bharath.rickyandmortyseries.R
+import androidx.fragment.app.Fragment
+import com.bharath.rickyandmortyseries.Controller.CharacterListController
 import com.bharath.rickyandmortyseries.databinding.FragmentHomeBinding
 
 
@@ -30,6 +30,18 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val listController = CharacterListController(::onCharacterSelected)
+        characterListViewModel.characterListLiveData.observe(viewLifecycleOwner){ listOfCharacters ->
+            listController.submitList(listOfCharacters)
+        }
+        binding.epoxyRecyclerView.setController(listController)
+
+    }
+
+    private fun onCharacterSelected(characterId: Int){
+        val navDirections = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(characterId)
+        navigateWithData(navDirections)
     }
 
     override fun onDestroy() {

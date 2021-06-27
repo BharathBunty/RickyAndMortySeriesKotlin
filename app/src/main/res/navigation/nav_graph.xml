@@ -19,6 +19,11 @@
         android:id="@+id/detailsFragment"
         android:name="com.bharath.rickyandmortyseries.fragments.DetailsFragment"
         android:label="Details Fragment"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="characterId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 </navigation>

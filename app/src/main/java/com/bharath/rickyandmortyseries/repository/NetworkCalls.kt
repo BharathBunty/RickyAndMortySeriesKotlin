@@ -3,7 +3,7 @@ package com.bharath.rickyandmortyseries.repository
 import com.bharath.rickyandmortyseries.datamodel.CharacterModel
 import com.bharath.rickyandmortyseries.datamodel.CharacterPageResponse
 
-class NetwokCalls {
+class NetworkCalls {
 
     suspend fun getCharacterById(characterId: Int): CharacterModel? {
         val request = BaseService().apiClient.getCharacterById(characterId)
